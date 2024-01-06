@@ -18,227 +18,291 @@ Window {
     property string placeholder: 'Search'
     property bool pickerSkinTonesDisabled: false
     property bool pickerSearchDisabled: false
+    property bool pickerShowPreview: true
 
-    RowLayout {
-        spacing: 20
+    property string emojis: ''
 
+    Column {
         anchors.centerIn: parent
+        spacing: 10
 
-        EmojiPicker {
-            id: picker
+        RowLayout {
+            spacing: 20
 
-            theme: pickerTheme
+            EmojiPicker {
+                id: picker
 
-            defaultSkinTone: 'neutral'
-            skinTonesDisabled: pickerSkinTonesDisabled
-            searchPlaceholder: placeholder
-            searchDisabled: pickerSearchDisabled
+                theme: pickerTheme
 
-            Layout.preferredWidth: pickerWidth
-            Layout.preferredHeight: pickerHeight
-        }
+                defaultSkinTone: 'neutral'
+                skinTonesDisabled: pickerSkinTonesDisabled
+                searchPlaceholder: placeholder
+                searchDisabled: pickerSearchDisabled
+                showPreview: pickerShowPreview
 
-        Rectangle {
-            Layout.preferredWidth: pickerWidth
-            Layout.preferredHeight: pickerHeight
+                onEmojiClicked: function (emoji) {
+                    emojis += emoji
+                }
+
+                Layout.preferredWidth: pickerWidth
+                Layout.preferredHeight: pickerHeight
+            }
 
             Rectangle {
-                anchors.margins: 16
-                anchors.fill: parent
+                Layout.preferredWidth: pickerWidth
+                Layout.preferredHeight: pickerHeight
 
-                ColumnLayout {
+                Rectangle {
+                    anchors.margins: 16
                     anchors.fill: parent
 
-                    Row {
-                        Layout.fillWidth: true
+                    ColumnLayout {
+                        anchors.fill: parent
 
-                        Text {
-                            text: qsTr("Skin Tones Disabled")
+                        Row {
+                            Layout.fillWidth: true
 
-                            font.bold: true
+                            Text {
+                                text: qsTr("Skin Tones Disabled")
 
-                            width: parent.width / 2
-                        }
+                                font.bold: true
 
-                        Rectangle {
+                                width: parent.width / 2
+                            }
 
-                            // color: '#F5F5F5'
-                            radius: 5
+                            Rectangle {
 
-                            width: parent.width / 2
-                            height: 25
+                                // color: '#F5F5F5'
+                                radius: 5
 
-                            CheckBox {
-                                checked: pickerSkinTonesDisabled
+                                width: parent.width / 2
+                                height: 25
 
-                                onCheckedChanged: pickerSkinTonesDisabled = checked
+                                CheckBox {
+                                    checked: pickerSkinTonesDisabled
+
+                                    onCheckedChanged: pickerSkinTonesDisabled = checked
+
+                                    anchors.right: parent.right
+                                }
                             }
                         }
-                    }
 
-                    Row {
-                        Layout.fillWidth: true
+                        Row {
+                            Layout.fillWidth: true
 
-                        Text {
-                            text: qsTr("Search Disabled")
+                            Text {
+                                text: qsTr("Search Disabled")
 
-                            font.bold: true
+                                font.bold: true
 
-                            width: parent.width / 2
-                        }
+                                width: parent.width / 2
+                            }
 
-                        Rectangle {
+                            Rectangle {
 
-                            // color: '#F5F5F5'
-                            radius: 5
+                                // color: '#F5F5F5'
+                                radius: 5
 
-                            width: parent.width / 2
-                            height: 25
+                                width: parent.width / 2
+                                height: 25
 
-                            CheckBox {
-                                checked: pickerSearchDisabled
+                                CheckBox {
+                                    checked: pickerSearchDisabled
 
-                                onCheckedChanged: pickerSearchDisabled = checked
+                                    onCheckedChanged: pickerSearchDisabled = checked
+
+                                    anchors.right: parent.right
+                                }
                             }
                         }
-                    }
 
-                    Row {
-                        Layout.fillWidth: true
+                        Row {
+                            Layout.fillWidth: true
 
-                        Text {
-                            text: qsTr("Search Placeholder")
+                            Text {
+                                text: qsTr("Show Preview")
 
-                            font.bold: true
+                                font.bold: true
 
-                            width: parent.width / 2
-                        }
+                                width: parent.width / 2
+                            }
 
-                        Rectangle {
+                            Rectangle {
 
-                            color: '#F5F5F5'
-                            radius: 5
+                                // color: '#F5F5F5'
+                                radius: 5
 
-                            width: parent.width / 2
-                            height: 25
+                                width: parent.width / 2
+                                height: 25
 
-                            TextInput {
-                                text: placeholder
+                                CheckBox {
+                                    checked: pickerShowPreview
 
-                                width: parent.width - 10
-                                onTextChanged: placeholder = text
+                                    onCheckedChanged: pickerShowPreview = checked
 
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: parent.left
-                                anchors.leftMargin: 5
-                                anchors.rightMargin: 5
+                                    anchors.right: parent.right
+                                }
                             }
                         }
-                    }
 
-                    Row {
-                        Layout.fillWidth: true
+                        Row {
+                            Layout.fillWidth: true
 
-                        Text {
-                            text: qsTr("Theme")
+                            Text {
+                                text: qsTr("Search Placeholder")
 
-                            font.bold: true
+                                font.bold: true
 
-                            width: parent.width / 2
+                                width: parent.width / 2
+                            }
+
+                            Rectangle {
+
+                                color: '#F5F5F5'
+                                radius: 5
+
+                                width: parent.width / 2
+                                height: 25
+
+                                TextInput {
+                                    text: placeholder
+
+                                    width: parent.width - 10
+                                    onTextChanged: placeholder = text
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 5
+                                    anchors.rightMargin: 5
+                                }
+                            }
                         }
 
-                        Rectangle {
+                        Row {
+                            Layout.fillWidth: true
 
-                            // color: '#F5F5F5'
-                            radius: 5
+                            Text {
+                                text: qsTr("Theme")
 
-                            width: parent.width / 2
-                            height: 25
+                                font.bold: true
 
-                            ComboBox {
-                                model: ['Light', 'Dark']
-                                currentIndex: pickerTheme === 'light' ? 0 : 1
+                                width: parent.width / 2
+                            }
 
-                                anchors.fill: parent
+                            Rectangle {
 
-                                onActivated: function (index) {
-                                    pickerTheme = index === 0 ? 'light' : 'dark'
+                                // color: '#F5F5F5'
+                                radius: 5
+
+                                width: parent.width / 2
+                                height: 25
+
+                                ComboBox {
+                                    model: ['Light', 'Dark']
+                                    currentIndex: pickerTheme === 'light' ? 0 : 1
+
+                                    anchors.fill: parent
+
+                                    onActivated: function (index) {
+                                        pickerTheme = index === 0 ? 'light' : 'dark'
+                                    }
+                                }
+                            }
+                        }
+
+                        Row {
+                            Layout.fillWidth: true
+
+                            Text {
+                                text: qsTr("Height")
+
+                                font.bold: true
+
+                                width: parent.width / 2
+                            }
+
+                            Rectangle {
+                                color: '#F5F5F5'
+
+                                radius: 5
+
+                                width: parent.width / 2
+                                height: 25
+
+                                TextInput {
+                                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+
+                                    text: pickerHeight
+
+                                    width: parent.width - 10
+                                    onTextChanged: pickerHeight = text
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 5
+                                    anchors.rightMargin: 5
+                                }
+                            }
+                        }
+
+                        Row {
+                            Layout.fillWidth: true
+
+                            Text {
+                                text: qsTr("Width")
+
+                                font.bold: true
+
+                                width: parent.width / 2
+                            }
+
+                            Rectangle {
+                                color: '#F5F5F5'
+
+                                radius: 5
+
+                                width: parent.width / 2
+                                height: 25
+
+                                TextInput {
+                                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+
+                                    text: pickerWidth
+
+                                    width: parent.width / 2
+
+                                    onTextChanged: pickerWidth = text
+
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 5
+                                    anchors.rightMargin: 5
                                 }
                             }
                         }
                     }
-
-                    Row {
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: qsTr("Height")
-
-                            font.bold: true
-
-                            width: parent.width / 2
-                        }
-
-                        Rectangle {
-                            color: '#F5F5F5'
-
-                            radius: 5
-
-                            width: parent.width / 2
-                            height: 25
-
-                            TextInput {
-                                inputMethodHints: Qt.ImhFormattedNumbersOnly
-
-                                text: pickerHeight
-
-                                width: parent.width - 10
-                                onTextChanged: pickerHeight = text
-
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: parent.left
-                                anchors.leftMargin: 5
-                                anchors.rightMargin: 5
-                            }
-                        }
-                    }
-
-                    Row {
-                        Layout.fillWidth: true
-
-                        Text {
-                            text: qsTr("Width")
-
-                            font.bold: true
-
-                            width: parent.width / 2
-                        }
-
-                        Rectangle {
-                            color: '#F5F5F5'
-
-                            radius: 5
-
-                            width: parent.width / 2
-                            height: 25
-
-                            TextInput {
-                                inputMethodHints: Qt.ImhFormattedNumbersOnly
-
-                                text: pickerWidth
-
-                                width: parent.width / 2
-
-                                onTextChanged: pickerWidth = text
-
-                                anchors.verticalCenter: parent.verticalCenter
-                                anchors.left: parent.left
-                                anchors.leftMargin: 5
-                                anchors.rightMargin: 5
-                            }
-                        }
-                    }
                 }
+            }
+        }
+
+        Rectangle {
+            width: parent.width
+            height: 68
+            radius: 5
+
+            color: '#fff'
+
+            Text {
+                anchors.fill: parent
+
+                anchors.margins: 10
+
+                font.pixelSize: 16
+
+                text: emojis
+
+                wrapMode: Text.Wrap
             }
         }
     }
